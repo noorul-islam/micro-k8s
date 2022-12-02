@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-api-gateway-app
+  labels:
+    app: cloud-api-gateway-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-api-gateway-app
+  template:
+    metadata:
+      labels:
+        app: cloud-api-gateway-app
+    spec:
+      containers:
+      - name: cloud-api-gateway-app
+        image: noorulislam/cloud-api-gateway:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 9191
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cloud-api-gateway-svc
+spec:
+  selector:
+    app: cloud-api-gateway-app
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 9191
+    protocol: TCP
