@@ -31,15 +31,15 @@ jobs:
         java-version: 11
         distribution: 'adopt'
         server_id: docker.io
-        server_username: MAVEN_USERNAME
-        server_password: MAVEN_PASSWORD
+        server_username: ${{ secrets.DOCKER_USERNAME }}
+        server_password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push with Maven Service Registry Service
       run: mvn package dockerfile:push --file service-registry/pom.xml
       env:
           MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          
+
     - name: Build and Push with Maven User Service
       run: mvn package dockerfile:push --file userservice/pom.xml
       env:
