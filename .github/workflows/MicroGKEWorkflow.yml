@@ -34,6 +34,12 @@ jobs:
         server_username: MAVEN_USERNAME
         server_password: MAVEN_PASSWORD
 
+    - name: Build and Push with Maven Service Registry Service
+      run: mvn package dockerfile:push --file service-registry/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          
     - name: Build and Push with Maven User Service
       run: mvn package dockerfile:push --file userservice/pom.xml
       env:
@@ -54,12 +60,6 @@ jobs:
 
     - name: Build and Push with Maven Cloud API Gateway Service
       run: mvn package dockerfile:push --file cloud-api-gateway/pom.xml
-      env:
-          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build and Push with Maven Service Registry Service
-      run: mvn package dockerfile:push --file service-registry/pom.xml
       env:
           MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
